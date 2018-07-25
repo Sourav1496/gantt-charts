@@ -1,0 +1,311 @@
+<!DOCTYPE html>
+<html lang"en">
+  <head>
+<style>
+body {
+  padding: 0;
+  margin: 0;
+  font-family: Verdana;
+  font-size: 15px;
+}
+
+select {
+  font-size: 15px;  
+  padding: 5px;	
+}
+
+.selector {
+  background: #eee;
+  border-bottom: 1px solid #ddd;
+  padding: 16px;
+  margin: 0;
+}
+#chartdiv {
+  width: 100%;
+  height: 500px;
+  font-size: 11px;
+}
+</style>
+<script src="https://www.amcharts.com/lib/3/amcharts.js"></script>
+<script src="https://www.amcharts.com/lib/3/serial.js"></script>
+<script src="https://www.amcharts.com/lib/3/plugins/dataloader/dataloader.min.js"></script>
+<script src="https://www.amcharts.com/lib/3/themes/light.js"></script>
+<script src="https://www.amcharts.com/lib/3/gantt.js"></script>
+
+ <p class="selector">
+  <select onchange="setDataSet(this.options[this.selectedIndex].value);">
+  <!--<option value="https://s3.ap-south-1.amazonaws.com/jsonfiles45/document+(9).json">Data Set #1</option>
+  <option value="https://s3.ap-south-1.amazonaws.com/jsonfiles45/document+(9).json">Data Set #2</option>
+  <option value="https://s3.ap-south-1.amazonaws.com/jsonfiles45/document+(9).json">Data Set #3</option>-->
+  <option value="https://s3.ap-south-1.amazonaws.com/jsonfiles45/document+(6).json">Data Set #1</option>
+  <option value="https://s3.ap-south-1.amazonaws.com/jsonfiles45/document13.json">Data Set #2</option>
+  <option value="https://s3.ap-south-1.amazonaws.com/jsonfiles45/document+(4).json">Data Set #3</option>
+  </select> &lt; Select a data set
+</p>
+<div id="chartdiv"></div> 
+
+<script>
+AmCharts.useUTC = true;
+var chart = AmCharts.makeChart("chartdiv", {
+  "type": "gantt",
+  "theme": "light",
+  "period": "hh",
+  "dataDateFormat": "YYYY-MM-DD",
+  "balloonDateFormat": "JJ:NN",
+  "columnWidth": 0.5,
+  "valueAxis": [{
+    "type": "hh",
+    "minimum": 7,
+    "maximum": 24
+  }],
+  
+  "categoryAxis": {
+    "guides": [{
+      "category": "1.Requirements/Design",
+      "toCategory": "1.Go-Live",
+      "LineAlpha": 0.5,
+      "expand": true,
+      "label": "Stream1",
+	  "position": "left",
+      "tickLength": 150
+    }, {
+      "category": "2.Requirements/Design",
+      "toCategory": "2.Go-Live",
+      "LineAlpha": 0.5,
+      "expand": true,
+      "label": "Stream2",
+      "tickLength": 150
+    }, {
+      "category": "3.Requirements/Design",
+      "toCategory": "3.Go-Live",
+      "LineAlpha": 0.5,
+      "expand": true,
+      "label": "Stream3",
+      "tickLength": 150
+    }]
+  },
+ //"gridAboveGraphs": false,
+  "brightnessStep": 10,
+  "graph": {
+    "fillAlphas": 1,
+    "balloonText": "<b>[[task]]</b>: [[open]] [[value]]"
+  },
+ /* "graphs": [{
+    "fillAlphas": 1,
+    "balloonText": "<b>[[task]]</b>: [[open]] [[value]]",
+	"type":"serial",
+	"valueField":"duration",
+  }],*/
+  "rotate": true,
+  "categoryField": "category",
+  /*"categoryAxis": {
+    "gridPosition": "start",
+    "gridAlpha": 0,
+    "tickPosition": "start",
+    "tickLength": 20
+  },*/
+  "segmentsField": "segments",
+  "colorField": "color",
+  "startDate": "2015-01-01",
+  "startField": "start",
+  "endField": "end",
+  "durationField": "duration",
+   "dataLoader": {
+  "url": "https://s3.ap-south-1.amazonaws.com/jsonfiles45/document+(6).json",
+  },
+  //"lineColorField":"#ffffff",
+  /*"dataProvider": [{
+    "category": "1.Requirements/Design",
+    "segments": [{
+      "start": 9,
+      "duration": 3,
+      "color": "#ffff00",
+      "task": "Task #1"
+    }]
+  }, {
+    "category": "Development",
+    "segments": [{
+      "start": 10,
+      "duration": 2,
+      "color": "#009933",
+      "task": "Task #2"
+    }]
+  }, {
+    "category": "Testing",
+    "segments": [{
+      "start": 12,
+      "duration": 2,
+      "color": "#009933",
+      "task": "Task #2"
+    }]
+  }, {
+    "category": "Training",
+    "segments": [{
+      "start": 9,
+      "duration": 6,
+      "color": "#009933",
+      "task": "Task #1"
+    }]
+  }, 
+ {
+    "category": "1.Go-Live",
+    "segments": [{
+      "start": 9,
+      "duration": 6,
+      "color": "#009933",
+      "task": "Task #1"
+    }]
+  },
+{
+    "category": "2.Requirements/Design",
+    "segments": [{
+      "start": 7,
+      "duration": 2,
+      "color": "#ff3300",
+      "task": "Task #1"
+    }]
+  }, {
+    "category": "Development",
+    "segments": [{
+      "start": 10,
+      "duration": 2,
+      "color": "#009933",
+      "task": "Task #2"
+    }]
+  }, {
+    "category": "Testing",
+    "segments": [{
+      "start": 12,
+      "duration": 2,
+      "color": "#009933",
+      "task": "Task #2"
+    }]
+  }, {
+    "category": "Training",
+    "segments": [{
+      "start": 9,
+      "duration": 6,
+      "color": "#009933",
+      "task": "Task #1"
+    }]
+  }, 
+ {
+    "category": "2.Go-Live",
+    "segments": [{
+      "start": 9,
+      "duration": 6,
+      "color": "#009933",
+      "task": "Task #1"
+    }]
+  },
+{
+    "category": "3.Requirements/Design",
+    "segments": [{
+      "start": 7,
+      "duration": 2,
+      "color": "#991f00",
+      "task": "Task #1"
+    }]
+  }, {
+    "category": "Development",
+    "segments": [{
+      "start": 10,
+      "duration": 2,
+      "color": "#009933",
+      "task": "Task #2"
+    }]
+  }, {
+    "category": "Testing",
+    "segments": [{
+      "start": 12,
+      "duration": 2,
+      "color": "#009933",
+      "task": "Task #2"
+    }]
+  }, {
+    "category": "Training",
+    "segments": [{
+      "start": 9,
+      "duration": 6,
+      "color": "#009933",
+      "task": "Task #1"
+    }]
+  }, 
+ {
+    "category": "3.Go-Live",
+    "segments": [{
+      "start": 9,
+      "duration": 6,
+      "color": "#009933",
+      "task": "Task #1"
+    }]
+	},
+	{
+    "category": "Burndown",
+    "segments": [{
+      "start": 9,
+      "duration": 3,
+      "color": "#000000",
+      "task": "Task #1"
+    }]
+	}],*/
+	
+   "valueScrollbar": {
+    "autoGridCount": true
+  },
+  "chartCursor": {
+    "cursorColor": "#55bb76",
+    "valueBalloonsEnabled": false,
+    "cursorAlpha": 0,
+    "valueLineAlpha": 0.5,
+    "valueLineBalloonEnabled": true,
+    "valueLineEnabled": true,
+    "zoomable": false,
+    "valueZoomable": true
+  },
+  
+ /* "periodSelector": {
+    "position": "left",
+    "periods": [ {
+      "period": "HH",
+      "selected": true,
+      "count": 1,
+      "label": "1 hour"
+    },  {
+      "period": "YTD",
+      "label": "YTD"
+    }, {
+      "period": "MAX",
+      "label": "MAX"
+    } ]
+  },*/
+    "legend": {
+  "data": [{
+    "title": "Not Yet Started as plan",
+    "color": "#cc0000"
+  }, {
+    "title": "On going",
+    "color": "#ffff00"
+  }, {
+    "title": "Yet to Start",
+    "color": "#009933"
+  }, {
+    "title": "Past Due",
+    "color": "#ff0000"
+  }, {
+    "title": "100% Complete",
+    "color": "#999966"
+  }]
+}
+   
+});
+function setDataSet(dataset_url) {
+  AmCharts.loadFile(dataset_url, {}, function(data) {
+    chart.dataProvider = AmCharts.parseJSON(data);
+    chart.validateData();
+  });
+}
+console.log(5+6);
+</script>				
+  </head>
+</html>
